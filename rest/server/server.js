@@ -13,35 +13,35 @@ app.all('/*', function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-const ingredients = [
+const people = [
     {
-        "id": "234kjw",
-        "text": "Eggs"
-    },
-    {
-        "id": "as82w",
-        "text": "Milk"
-    },
-    {
-        "id": "234sk1",
-        "text": "Bacon"
-    },
-    {
-        "id": "ppo3j3",
-        "text": "Frog Legs"
-    }
+        id: 1,
+        username: "alice@script.com",
+        age: 34,
+        name: "Alice"
+       },{
+        id: 2,
+        username: "makky@try.com",
+        age: 31,
+        name: "Makky"
+       }
 ];
 
 
-app.get('/ingredients', function(req, res) {
+app.get('/person/:id', function(req, res) {
+    const id = req.params.id
+    console.log(id)
     console.log("GET From SERVER");
-    res.send(ingredients);
+    const result = people.filter(obj => {
+        return obj.id == id
+      })
+    res.send(result);
 });
 
-app.post('/ingredients', function(req, res) {
-    const ingredient = req.body;
+app.post('/person', function(req, res) {
+    const person = req.body;
     console.log(req.body);
-    ingredients.push(ingredient);
+    people.push(person);
     res.status(200).send("Successfully posted ingredient");
 });
 
